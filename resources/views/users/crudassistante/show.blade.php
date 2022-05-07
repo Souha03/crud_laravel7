@@ -17,8 +17,26 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Name:</strong>
-                {{ $patient->name }}
+                <strong>First Name:</strong>
+                {{ $patient->firstname }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Last Name:</strong>
+                {{ $patient->lastname }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Birth:</strong>
+                {{ $patient->birth }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Phone:</strong>
+                {{ $patient->phone}}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">

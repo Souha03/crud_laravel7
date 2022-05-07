@@ -16,8 +16,26 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Name:</strong>
-                {{ $user->name }}
+                <strong>First Name:</strong>
+                {{ $user->firstname }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Last Name:</strong>
+                {{ $user->lastname }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Birth:</strong>
+                {{ $user->birth }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Phone:</strong>
+                {{ $user->phone}}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">

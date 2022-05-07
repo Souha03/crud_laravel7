@@ -20,7 +20,8 @@ class UserController extends Controller
     public function index()
     {
             $users = Users::latest()->paginate(100);
-            return view('users.index',compact('users'))->with('i',(request()->input('page',1)-1)*100);
+            return response()->json(Users::all(), 200);
+            
     }
    
 
@@ -35,9 +36,7 @@ class UserController extends Controller
     public function create()
     {    
         
-        return view('users.create');
-       
-    }
+        return response()->json(['message' => 'created'], 201);    }
 
     /**
      * Store a newly created resource in storage.
@@ -49,20 +48,20 @@ class UserController extends Controller
     //medecin 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            //  $this->attributes['password'] = bcrypt($request),
-            // 'role' => 'required',
+        // $request->validate([
+        //     'firstname' => 'required',
+        //     'lastname' => 'required',
+        //     'birth' => 'required',
+        //     'phone' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        //      $this->attributes['password'] = bcrypt($request),
+        //     'role' => 'required',
             
-        ]);
+        // ]);
   
-        Users::create($request->all());
-        
-    
-        
-        return redirect()->route('users.index')->with('success','User created successfully.');
+        $user=Users::create($request->all());
+        return response($user ,201);
     }
 
     
@@ -77,9 +76,13 @@ class UserController extends Controller
      */
     /******show**** */
     //medecin
-    public function show(Users $user)
+    public function show(Users $user,$id)
     {
-        return view('users.show',compact('user')); 
+        $users = Users::find($id);
+        if(is_null($users)) {
+            return response()->json(['message' => 'users Not Found'], 404);
+        }
+        return response()->json($users::find($id), 200);
         
     }
 
@@ -94,11 +97,11 @@ class UserController extends Controller
     /*****edit******* */
 
     //medecin 
-    public function edit(Users $users)
+    public function edit(Users $users,$id)
     {
-      
-        return view('users.edit',compact('users'));
-    }
+        $users = Users::find($id);
+
+        return response()->json(['message' => 'edited'], 201);      }
 
     /**
      * Update the specified resource in storage.
@@ -110,18 +113,26 @@ class UserController extends Controller
     /*******update***** */
 
     //medecin 
-    public function update(Request $request, Users $user)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-           'password' => 'required',
+    public function update(Request $request, Users $user,$id)
 
-        ]);
+    {
+        $user = Users::find($id);
+
+        // $request->validate([
+        //     'firstname' => 'required',
+        //     'lastname' => 'required',
+        //     'birth' => 'required',
+        //     'phone' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+
+        // ]);
   
         $user->update($request->all());
-        return redirect()->route('users.index')
-                        ->with('success','User updated successfully');
+        // return redirect()->route('users.index')
+        //                 ->with('success','User updated successfully');
+        return response($user, 200);
+
     }
 
       
@@ -133,16 +144,21 @@ class UserController extends Controller
      */
     /*****destroy***** */
     //medecin 
-    public function destroy(Users $user)
+    public function destroy(Users $user,$id)
     
         {
+            $user = Users::find($id);
             $user->delete();
       
-            return redirect()->route('users.index')
-                            ->with('success','Users deleted successfully');
+            // return redirect()->route('users.index')
+            //                 ->with('success','Users deleted successfully');
+            return response()->json(null, 204);
+
 
                          
         }
+
+       
 
 
     }

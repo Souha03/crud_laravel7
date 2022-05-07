@@ -15,8 +15,9 @@ class CrudassiController extends Controller
      */
     public function index()
     {
-        $patients = Users::latest()->paginate(100);
-        return view('users.crudassistante.index',compact('patients'))->with('i',(request()->input('page',1)-1)*100);
+            $users = Users::latest()->paginate(100);
+            return response()->json(Users::all(), 200);
+            
     }
 
     /**
@@ -25,10 +26,9 @@ class CrudassiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('users.crudassistante.create');
-    }
-
+    {    
+        
+        return response()->json(['message' => 'created'], 201);    }
 
     /**
      * Store a newly created resource in storage.
@@ -39,18 +39,20 @@ class CrudassiController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-             hash::check($request->input('password')),
-            'role' => 'required',
+        // $request->validate([
+        //     'firstname' => 'required',
+        //     'lastname' => 'required',
+        //     'birth' => 'required',
+        //     'phone' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        //      $this->attributes['password'] = bcrypt($request),
+        //     'role' => 'required',
             
-           
-        ]);
+        // ]);
   
-        Users::create($request->all());
-   
-        return redirect()->route('crudassistante.index')->with('success','User created successfully.');
+        $user=Users::create($request->all());
+        return response($user ,201);
     }
     
 
@@ -61,9 +63,14 @@ class CrudassiController extends Controller
      * @param  \App\Users  $patients
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $patient)
+    public function show(Users $user,$id)
     {
-        return view('users.crudassistante.show',compact('patient')); 
+        $users = Users::find($id);
+        if(is_null($users)) {
+            return response()->json(['message' => 'users Not Found'], 404);
+        }
+        return response()->json($users::find($id), 200);
+        
     }
 
     /**
@@ -72,11 +79,11 @@ class CrudassiController extends Controller
      * @param  \App\Users  $patients
      * @return \Illuminate\Http\Response
      */
-    public function edit(Users $patient)
+    public function edit(Users $users,$id)
     {
-        return view('users.crudassistante.edit',compact('patient'));
-        
-    }
+        $users = Users::find($id);
+
+        return response()->json(['message' => 'edited'], 201);      }
 
     /**
      * Update the specified resource in storage.
@@ -85,20 +92,28 @@ class CrudassiController extends Controller
      * @param \App\Users  $patients
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Users $patient)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+    public function update(Request $request, Users $user,$id)
 
-        ]);
+    {
+        $user = Users::find($id);
+
+        // $request->validate([
+        //     'firstname' => 'required',
+        //     'lastname' => 'required',
+        //     'birth' => 'required',
+        //     'phone' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+
+        // ]);
   
-        $patient->update($request->all());
-  
-        return redirect()->route('crudassistante.index')
-                        ->with('success','User updated successfully');
+        $user->update($request->all());
+        // return redirect()->route('users.index')
+        //                 ->with('success','User updated successfully');
+        return response($user, 200);
+
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -106,11 +121,18 @@ class CrudassiController extends Controller
      * @param \App\Users  $patients
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Users $patient)
-    {
-        $patient->delete();
+    public function destroy(Users $user,$id)
+    
+        {
+            $user = Users::find($id);
+            $user->delete();
       
-            return redirect()->route('crudassistante.index')
-                            ->with('success','Users deleted successfully');
-    }
+            // return redirect()->route('users.index')
+            //                 ->with('success','Users deleted successfully');
+            return response()->json(null, 204);
+
+
+                         
+        }
+
 }

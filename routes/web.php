@@ -33,6 +33,7 @@ Route::get('/assistantes','AssistanteController@index')->name('assistantes')->mi
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
 //crud a
 Route::resource('users','UserController');
 Route::resource('assistante','CrudAssistante');

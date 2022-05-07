@@ -33,7 +33,7 @@
         @if($patient->role == 4)
         <tr>
             <td>{{ ++$i }}</td>
-            <td>{{ $patient->name }}</td>
+            <td>{{ $patient->firstname }}</td>
             <td>{{ $patient->email }}</td>
             <td>
                 <form action="{{ route('patientcrud.destroy',$patient->id) }}" method="POST">

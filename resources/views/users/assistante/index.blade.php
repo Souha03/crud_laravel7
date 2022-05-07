@@ -33,7 +33,7 @@
         @if($assistante->role == 3)
         <tr>
             <td>{{ ++$i }}</td>
-            <td>{{ $assistante->name }}</td>
+            <td>{{ $assistante->firstname }}</td>
             <td>{{ $assistante->email }}</td>
            
             <td>

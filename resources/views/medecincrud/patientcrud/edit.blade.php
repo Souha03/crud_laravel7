@@ -32,8 +32,26 @@
          <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $patient->name }}" class="form-control" placeholder="Name">
+                    <strong>First name:</strong>
+                    <input type="text" name="firstname" value="{{ $apatient->firstname }}" class="form-control" placeholder="First Name">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Last name:</strong>
+                    <input type="text" name="lastname" value="{{ $apatient->lastname }}" class="form-control" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Birth:</strong>
+                    <input type="date" name="birth" value="{{ $apatient->birth }}" class="form-control" placeholder="birth">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Phone:</strong>
+                    <input type="number" name="phone" value="{{ $apatient->phone }}" class="form-control" placeholder="Phone">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">

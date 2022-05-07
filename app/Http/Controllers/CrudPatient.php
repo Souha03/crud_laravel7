@@ -15,8 +15,8 @@ class CrudPatient extends Controller
      */
     public function index()
     {
-        $patients = Users::latest()->paginate(100);
-        return view('users.patient.index',compact('patients'))->with('i',(request()->input('page',1)-1)*100);
+        $users = Users::latest()->paginate(100);
+        return response()->json(Users::all(), 200);
     }
 
     /**
@@ -26,7 +26,7 @@ class CrudPatient extends Controller
      */
     public function create()
     {
-        return view('users.patient.create');
+        return response()->json(['message' => 'created'], 201);
     }
 
 
@@ -39,19 +39,22 @@ class CrudPatient extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'role' => 'required',
+        // $request->validate([
+        //     'firstname' => 'required',
+        //     'lastname' => 'required',
+        //     'birth' => 'required',
+        //     'phone' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        //      $this->attributes['password'] = bcrypt($request),
+        //     'role' => 'required',
             
-           
-        ]);
+        // ]);
   
-        Users::create($request->all());
-   
-        return redirect()->route('patient.index')->with('success','User created successfully.');
+        $user=Users::create($request->all());
+        return response($user ,201);
     }
+
     
 
 
@@ -61,9 +64,14 @@ class CrudPatient extends Controller
      * @param  \App\Users  $patients
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $patient)
+    public function show(Users $patient,$id)
     {
-        return view('users.patient.show',compact('patient')); 
+       
+        $users = Users::find($id);
+        if(is_null($users)) {
+            return response()->json(['message' => 'users Not Found'], 404);
+        }
+        return response()->json($users::find($id), 200); 
     }
 
     /**
@@ -72,9 +80,11 @@ class CrudPatient extends Controller
      * @param  \App\Users  $patients
      * @return \Illuminate\Http\Response
      */
-    public function edit(Users $patient)
+    public function edit(Users $patient,$id)
     {
-        return view('users.patient.edit',compact('patient'));
+        $users = Users::find($id);
+
+        return response()->json(['message' => 'edited'], 201);  
         
     }
 
@@ -85,19 +95,24 @@ class CrudPatient extends Controller
      * @param \App\Users  $patients
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Users $patient)
+    public function update(Request $request, Users $patient,$id)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+        $user = Users::find($id);
 
-        ]);
+        // $request->validate([
+        //     'firstname' => 'required',
+        //     'lastname' => 'required',
+        //     'birth' => 'required',
+        //     'phone' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+
+        // ]);
   
-        $patient->update($request->all());
-  
-        return redirect()->route('patient.index')
-                        ->with('success','User updated successfully');
+        $user->update($request->all());
+        // return redirect()->route('users.index')
+        //                 ->with('success','User updated successfully');
+        return response($user, 200);
     }
 
     /**
@@ -106,11 +121,13 @@ class CrudPatient extends Controller
      * @param \App\Users  $patients
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Users $patient)
+    public function destroy(Users $patient,$id)
     {
-        $patient->delete();
+        $user = Users::find($id);
+            $user->delete();
       
-            return redirect()->route('patient.index')
-                            ->with('success','Users deleted successfully');
+            // return redirect()->route('users.index')
+            //                 ->with('success','Users deleted successfully');
+            return response()->json(null, 204);
     }
 }

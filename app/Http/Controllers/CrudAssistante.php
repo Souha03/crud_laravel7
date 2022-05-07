@@ -16,8 +16,8 @@ class CrudAssistante extends Controller
      */
     public function index()
     {
-        $assistantes = Users::latest()->paginate(100);
-        return view('users.assistante.index',compact('assistantes'))->with('i',(request()->input('page',1)-1)*100);
+        $users = Users::latest()->paginate(100);
+        return response()->json(Users::all(), 200);
     }
     
     /**
@@ -27,7 +27,7 @@ class CrudAssistante extends Controller
      */
     public function create()
     {
-        return view('users.assistante.create');
+        return response()->json(['message' => 'created'], 201);
     }
 
     /**
@@ -37,19 +37,20 @@ class CrudAssistante extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'role' => 'required',
+     {
+    //     $request->validate([
+    //         'firstname' => 'required',
+    //         'lastname' => 'required',
+    //         'birth' => 'required',
+    //         'phone' => 'required',
+    //         'email' => 'required',
+    //         'password' => 'required',
             
             
-        ]);
+    //     ]);
   
-        Users::create($request->all());
-   
-        return redirect()->route('assistante.index')->with('success','User created successfully.');
+    $user=Users::create($request->all());
+    return response($user ,201);
     }
 
     /**
@@ -58,9 +59,13 @@ class CrudAssistante extends Controller
      * @param   \App\Users $assistantes
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $assistante)
+    public function show(Users $user,$id)
     {
-        return view('users.assistante.show',compact('assistante')); 
+        $users = Users::find($id);
+        if(is_null($users)) {
+            return response()->json(['message' => 'users Not Found'], 404);
+        }
+        return response()->json($users::find($id), 200);
     }
 
     /**
@@ -69,9 +74,11 @@ class CrudAssistante extends Controller
      * @param   \App\Users $assistantes
      * @return \Illuminate\Http\Response
      */
-    public function edit(Users $assistante)
+    public function edit(Users $users,$id)
     {
-        return view('users.assistante.edit',compact('assistante'));
+        $users = Users::find($id);
+
+        return response()->json(['message' => 'edited'], 201); 
     }
 
     /**
@@ -81,19 +88,22 @@ class CrudAssistante extends Controller
      * @param  \App\Users $assistantes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Users $assistante)
+    public function update(Request $request, Users $user,$id)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-
-        ]);
+        // $request->validate([
+        //     'firstname' => 'required',
+        //     'lastname' => 'required',
+        //     'birth' => 'required',
+        //     'phone' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        // ]);
+        $user = Users::find($id);
+        $user->update($request->all());
+        return response($user, 200);
   
-        $assistante->update($request->all());
-  
-        return redirect()->route('assistante.index')
-                        ->with('success','User updated successfully');
+        // return redirect()->route('assistante.index')
+        //                 ->with('success','User updated successfully');
     }
 
     /**
@@ -102,12 +112,18 @@ class CrudAssistante extends Controller
      * @param  \App\Users $assistantes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Users $assistante)
+    public function destroy(Users $user,$id)
+    
     {
-        $assistante->delete();
-      
-            return redirect()->route('assistante.index')
-                            ->with('success','Users deleted successfully');
+        $user = Users::find($id);
+        $user->delete();
+  
+        // return redirect()->route('users.index')
+        //                 ->with('success','Users deleted successfully');
+        return response()->json(null, 204);
+
+
+                     
     }
 }
 

@@ -32,20 +32,60 @@
     <input type="hidden" value="3" name="role">
     @csrf
     <div class="form-group row">
-        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-
         <div class="col-md-6">
-            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-            {{-- <input id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" value="{{ old('role') }}" required autocomplete="role" autofocus> --}}
+            <input id="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') }}"   required autocomplete="firstname" autofocus>
+    
+            @error('firstname')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+     </div>
 
-            @error('name')
+    <div class="form-group row">
+        <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('last name') }}</label>
+    
+        <div class="col-md-6">
+            <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}"   required autocomplete="name" autofocus>
+    
+            @error('lastname')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
     </div>
+    
+    
+    <div class="form-group row">
+        <label for="birth" class="col-md-4 col-form-label text-md-right">{{ __('date to birth') }}</label>
+    
+        <div class="col-md-6">
+            <input id="birth" type="date" class="form-control @error('birth') is-invalid @enderror" name="birth" value="{{ old('birth') }}"  minlength="8" required autocomplete="birth" autofocus required pattern="\d{4}-\d{2}-\d{2}">
+    
+            @error('birth')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label for="phone" class="col-md-4 col-form-label text-md-right">phone </label>
+    
+        <div class="col-md-6">
+            <input type="tel" id="phone" class="form-control" name="phone"  required>
+    
+            @error('phone')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+    </div>
+    
 
     <div class="form-group row">
         <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>

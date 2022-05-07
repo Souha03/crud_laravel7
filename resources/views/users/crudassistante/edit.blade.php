@@ -29,14 +29,31 @@
         @csrf
         @method('PATCH')
    
-         <div class="row">
+        <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $patient->name }}" class="form-control" placeholder="Name">
+                    <strong>First name:</strong>
+                    <input type="text" name="firstname" value="{{ $patient->firstname }}" class="form-control" placeholder="First Name">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Last name:</strong>
+                    <input type="text" name="lastname" value="{{ $patient->lastname }}" class="form-control" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Birth:</strong>
+                    <input type="date" name="birth" value="{{ $patient->birth }}" class="form-control" placeholder="birth">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Phone:</strong>
+                    <input type="number" name="phone" value="{{ $patient->phone }}" class="form-control" placeholder="Phone">
+                </div>
+            </div>
                 <div class="form-group">
                     <strong>E-mail:</strong>
                     <input type="email" name="email" value="{{ $patient->email }}" class="form-control" placeholder="E-mail">
